@@ -14,12 +14,13 @@ class DeckList extends React.Component {
             ],
         }
         this.handleEditClick = this.handleEditClick.bind(this);
-        this.updateDeckList = this.updateDeckList.bind(this);
+        //this.updateDeckList = this.updateDeckList.bind(this);
     }
 
-    updateDeckList= (e) => {
+    updateDeckList = (e) => {
         console.log('update e: ');
         console.log(e);
+        
     }
 
     handleEditClick(deckID){
@@ -72,16 +73,17 @@ export class DeckForm extends React.Component {
             title: target.value
         });
     }
-    handleSubmit(e){
+    handleSubmit = (e) => {
         //let isNewDeck = false;
         //if(!this.props.decks) {
         //    isNewDeck = true;
         //}
+        this.props.updateDeckList(e);
         e.preventDefault();
         console.log('e: ');
         console.log(e);
         //this.props.updateDeckList(e.target.value, this.props.decks, isNewDeck );
-        //this.props.updateDeckList(e);
+        
     }
 
     render(){
