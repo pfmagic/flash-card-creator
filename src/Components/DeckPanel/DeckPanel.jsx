@@ -9,9 +9,15 @@ class DeckPanel extends React.Component {
             panel: "decklist",
             title: "Flash Cards",
             showForm: false,
+            decks: [
+                { id: '1', title: 'deck title 1' },
+                { id: '2', title: 'deck title 2' },
+                { id: '3', title: 'deck title 3' }, 
+            ],
         }
-
+        
         this.handleAddClick = this.handleAddClick.bind(this);
+        this.saveDeckList = this.saveDeckList.bind(this);
         
     }
     
@@ -25,16 +31,16 @@ class DeckPanel extends React.Component {
         });
     }
 
-   // saveDeckList(title, deck, isNewDeck){
-   //     console.log(title);
-   //     console.log(deck);
-   //     console.log(isNewDeck);
-   //     alert('fired!');
-   // }
+    saveDeckList(title, deck, isNewDeck){
+        console.log(title);
+        console.log(deck);
+        console.log(isNewDeck);
+
+    }
     render() {     
         let list;
         if(this.state.panel === 'decklist'){
-            list = <DeckList showForm={this.state.showForm}/>;
+            list = <DeckList showForm={this.state.showForm} decks={this.state.decks}/>;
         }else{            
             list = <CardList showForm={this.state.showForm}/>;         
         }
@@ -52,7 +58,7 @@ class DeckPanel extends React.Component {
                         if(this.state.showForm === true){
                            return <DeckForm 
                                     deck={[]} 
-                                    updateDeckList={this.updateDeckList}
+                                    updateDeckList={this.saveDeckList}
                                 />;
                         }
                     })()}

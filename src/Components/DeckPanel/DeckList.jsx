@@ -4,17 +4,9 @@ import './deck.css';
 class DeckList extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            panel: "decklist",
-            title: "Flash Cards",
-            decks: [
-                { id: '1', title: 'deck title 1' },
-                { id: '2', title: 'deck title 2' },
-                { id: '3', title: 'deck title 3' }, 
-            ],
-        }
+        
         this.handleEditClick = this.handleEditClick.bind(this);
-        //this.updateDeckList = this.updateDeckList.bind(this);
+        this.updateDeckList = this.updateDeckList.bind(this);
     }
 
     updateDeckList = (e) => {
@@ -26,10 +18,10 @@ class DeckList extends React.Component {
     handleEditClick(deckID){
         console.log('Edit clicked!');
         console.log(deckID);
-        console.log(this.state.decks[deckID]);
+        console.log(this.props.decks[deckID]);
         return (<DeckForm 
                     deckID={deckID}
-                    deck={this.state.decks[deckID]}
+                    deck={this.props.decks[deckID]}
                     updateDeckList={this.updateDeckList}
                 /> );        
                      
@@ -54,7 +46,7 @@ class DeckList extends React.Component {
     render(){
         return(
             <React.Fragment>  
-                {this.renderDeck(this.state.decks)}
+                {this.renderDeck(this.props.decks)}
             </React.Fragment>
         );
     }
@@ -82,6 +74,7 @@ export class DeckForm extends React.Component {
         e.preventDefault();
         console.log('e: ');
         console.log(e);
+        console.log(this.props);
         //this.props.updateDeckList(e.target.value, this.props.decks, isNewDeck );
         
     }
@@ -113,7 +106,6 @@ export class DeckForm extends React.Component {
 class Deck extends React.Component {
     constructor(props){
         super(props);
-        console.log('Deck: '+this.props.decks);
     }
 
    render(){
@@ -122,7 +114,7 @@ class Deck extends React.Component {
                 <div className="deck">
                     <div className='deck-controls'>
                         <button >Delete</button>
-                        <button value={this.props.id} onClick={()=>this.props.onEditClick()}>Edit</button>
+                        <button value={this.props.id} onClick={()=>this.props.onEditClick(this.props.id)}>Edit</button>
                         <button>Play</button>
                     </div>
                     <div className='deck-title'>{this.props.value}</div>
