@@ -1,0 +1,56 @@
+.deck {
+    background-color: white;
+    border: 1px solid gray;
+    margin: 20px 20px;
+    display: flex;
+    flex-flow: column;
+    min-height: 150px;
+}
+
+.deck .deck-controls {
+    flex: 1;
+    padding: 2px 5px;
+    justify-items: right;
+}
+
+.deck .deck-title {
+    flex: 2;
+    padding: 20px 20px;
+    font-weight: bold;
+}
+
+.card-front {
+    font-weight: bold;
+}
+
+.card-back {
+    font-weight: normal;
+}
+
+.panel-header {
+    display: flex;
+    flex-flow: row nowrap;
+    border-bottom:1px solid lightslategray;
+    align-items: center;
+}
+
+.panel-title {
+    font-size: 18px;
+    text-align: left;
+    padding: 0 20px;
+    flex: 2;
+}
+
+.add-btn {
+    background-color: royalblue;
+    font-weight: bold;
+    color:white;
+    height: 24px;
+    width: 24px;
+    margin-right: 20px;
+}
+
+.card {
+    align-items: center;
+    justify-content: center;
+}
