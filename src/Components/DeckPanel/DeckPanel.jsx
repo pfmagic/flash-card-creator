@@ -12,12 +12,25 @@ class DeckPanel extends React.Component {
         }
 
         this.handleAddClick = this.handleAddClick.bind(this);
+        
     }
     
     handleAddClick(showForm){
         this.setState({showForm:true});
     }
 
+    handleTitleChange({ target }){
+        this.setState({
+            title: target.value
+        });
+    }
+
+   // saveDeckList(title, deck, isNewDeck){
+   //     console.log(title);
+   //     console.log(deck);
+   //     console.log(isNewDeck);
+   //     alert('fired!');
+   // }
     render() {     
         let list;
         if(this.state.panel === 'decklist'){
@@ -37,7 +50,10 @@ class DeckPanel extends React.Component {
                     />
                     {(()=>{
                         if(this.state.showForm === true){
-                           return <DeckForm />;
+                           return <DeckForm 
+                                    deck={[]} 
+                                    updateDeckList={this.updateDeckList}
+                                />;
                         }
                     })()}
                     {list}
