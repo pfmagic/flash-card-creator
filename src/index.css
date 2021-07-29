@@ -32,11 +32,12 @@ code {
 }
 
 .left-col {
-  background-color:wheat;
-  border-right: 2px solid rgb(252, 176, 141);
+  background-color:rgb(160, 182, 202);
+  border-right: 2px solid darkslategrey;
   flex: 0 0 35%;
 }
 .right-col {
-  background-color:whitesmoke;
+  background-color:rgb(255, 255, 255);
   flex: 0 0 65%;
 }
+
