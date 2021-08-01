@@ -4,14 +4,9 @@ import './deck.css';
 class DeckList extends React.Component {
     constructor(props){
         super(props);
-        
-        //this.handleEditClick = this.handleEditClick.bind(this);
-        //this.updateDeckList = this.updateDeckList.bind(this);
     }
 
     updateDeckList = (e) => {
-        //console.log('update e: ');
-        //console.log(e);
         this.props.saveDeckList(e);
     }
 
@@ -25,17 +20,22 @@ class DeckList extends React.Component {
                      
     }
 
+    handleDeleteClick(deckID){
+        this.props.handleDeleteClick(0.4453812730698925);
+        //console.log(deckID);
+    }
+
     renderDeck(decks) {
-    console.log(decks.id);
+    console.log(decks);      
         return (
-            decks.map(deck => (
+            decks.reverse().map(deck => (   
                 <Deck 
                     key={deck.id}
                     id={deck.id}    
                     value={deck.title} 
                     showForm={this.props.showForm}
+                    onDeleteClick={this.handleDeleteClick}
                     onEditClick={this.handleEditClick}
-                   // handleDeleteClick={() => this.handleDeleteClick(deck.id)}
                     onClick={() => this.handleClick()}
                 />            
             ))
@@ -97,14 +97,21 @@ export class DeckForm extends React.Component {
         
 }
 
-const Deck = (props) => {
-    console.log(props);
-    return(
+export class Deck extends React.Component {
+    constructor(props){
+        super(props);
+    }
+    
+    render() {
+        //console.log(this.props.id);
+        return(
         
         <React.Fragment>
             <div className="deck">
                 <div className='deck-controls'>
-                    <button>Delete</button>
+                    <button value={this.props.value} 
+                        onClick={()=>this.props.onDeleteClick(this.props.value)}
+                    >Delete</button>
                     <button value={this.props.id} 
                         onClick={()=>this.props.onEditClick(this.props.id)}
                     >Edit</button>
@@ -114,6 +121,8 @@ const Deck = (props) => {
             </div>
         </React.Fragment>
     );
+    }
+    
     
 }
 

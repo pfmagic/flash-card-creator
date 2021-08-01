@@ -6,22 +6,24 @@ class DeckPanel extends React.Component {
     constructor(props) {
         super(props);
 
-        const decks = parseJSON('deck_data');
-
+        const decks = parseJSON('decks');
+console.log(decks);
         this.state = {
             panel: "decklist",
             title: "Flash Cards",
             showForm: false,
-            //decks: decks,
-            decks: [{
-                id: 0,
-                title: "Add a Title"
-            }]
+            decks: decks,
+            //decks: [
+            //    { id: '1', title: 'deck title 1' },
+            //    { id: '2', title: 'deck title 2' },
+            //    { id: '3', title: 'deck title 3' }, 
+            //]
         }
         
         
         this.saveDeckList = this.saveDeckList.bind(this);
         this.handleAddClick = this.handleAddClick.bind(this);
+        this.handleDeleteClick = this.handleDeleteClick.bind(this);
         
     }
     
@@ -35,31 +37,34 @@ class DeckPanel extends React.Component {
         });
     }
 
+    handleDeleteClick(id){
+alert('delete fires!'+ id);
+    }
+
     saveDeckList({target}){
-        //const id = new Date().getTime();
         const id = Math.random();
-const decks = [];
-        //const decks = this.state.decks.slice();
-       // const data_storage = {};
-        const newDeck = [{
+
+        const decks = this.state.decks;
+
+        const newDeck = {
             id: id,
             title: target.title.value
-        }];
-        decks.push(newDeck);
-
+        };
         
-        //data_storage['deck_data'] = decks;
-        //const myJSON = JSON.stringify(data_storage);
+        decks.push(newDeck);
         const myJSON = JSON.stringify(decks);
-
-        this.setState({decks: decks});
+        this.setState({decks: decks, showForm: false});
         localStorage.setItem('decks', myJSON);
     }
 
     render() {     
         let list;
         if(this.state.panel === 'decklist'){
-            list = <DeckList showForm={this.state.showForm} decks={this.state.decks}/>;
+            list = <DeckList 
+                        decks={this.state.decks} 
+                        showForm={this.state.showForm} 
+                        handleDeleteClick={this.handleDeleteClick}
+                   />;
         }else{            
             list = <CardList showForm={this.state.showForm}/>;         
         }
