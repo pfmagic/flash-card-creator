@@ -5,8 +5,8 @@ class DeckList extends React.Component {
     constructor(props){
         super(props);
         
-        this.handleEditClick = this.handleEditClick.bind(this);
-        this.updateDeckList = this.updateDeckList.bind(this);
+        //this.handleEditClick = this.handleEditClick.bind(this);
+        //this.updateDeckList = this.updateDeckList.bind(this);
     }
 
     updateDeckList = (e) => {
@@ -26,7 +26,7 @@ class DeckList extends React.Component {
     }
 
     renderDeck(decks) {
-    //console.log(decks);
+    console.log(decks.id);
         return (
             decks.map(deck => (
                 <Deck 
@@ -97,17 +97,21 @@ export class DeckForm extends React.Component {
         
 }
 
-const Deck = (props) =>  {
+const Deck = (props) => {
+    console.log(props);
     return(
+        
         <React.Fragment>
             <div className="deck">
                 <div className='deck-controls'>
-                    <button >Delete</button>
-                    <button value={this.props.id} onClick={()=>this.props.onEditClick(this.props.id)}>Edit</button>
+                    <button>Delete</button>
+                    <button value={this.props.id} 
+                        onClick={()=>this.props.onEditClick(this.props.id)}
+                    >Edit</button>
                     <button>Play</button>
                 </div>
-            <div className='deck-title'>{this.props.value}</div>
-        </div>
+                <div className='deck-title'>{this.props.value}</div>
+            </div>
         </React.Fragment>
     );
     

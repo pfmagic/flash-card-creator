@@ -12,11 +12,16 @@ class DeckPanel extends React.Component {
             panel: "decklist",
             title: "Flash Cards",
             showForm: false,
-            decks: decks,
+            //decks: decks,
+            decks: [{
+                id: 0,
+                title: "Add a Title"
+            }]
         }
         
-        this.handleAddClick = this.handleAddClick.bind(this);
+        
         this.saveDeckList = this.saveDeckList.bind(this);
+        this.handleAddClick = this.handleAddClick.bind(this);
         
     }
     
@@ -31,20 +36,24 @@ class DeckPanel extends React.Component {
     }
 
     saveDeckList({target}){
-        const id = new Date().getTime();
-
-        const decks = this.state.decks.slice();
-        const data_storage = {};
+        //const id = new Date().getTime();
+        const id = Math.random();
+const decks = [];
+        //const decks = this.state.decks.slice();
+       // const data_storage = {};
         const newDeck = [{
             id: id,
             title: target.title.value
         }];
         decks.push(newDeck);
 
-        data_storage['deck_data'] = decks;
+        
+        //data_storage['deck_data'] = decks;
+        //const myJSON = JSON.stringify(data_storage);
+        const myJSON = JSON.stringify(decks);
 
         this.setState({decks: decks});
-        localStorage.setItem('decks', JSON.stringify(data_storage));
+        localStorage.setItem('decks', myJSON);
     }
 
     render() {     
