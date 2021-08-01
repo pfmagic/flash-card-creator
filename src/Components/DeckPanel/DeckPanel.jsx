@@ -6,9 +6,8 @@ class DeckPanel extends React.Component {
     constructor(props) {
         super(props);
 
-        //const decks = parseJSON('decks');
         const decks = parseJSON('deck_data');
-console.log(decks);
+
         this.state = {
             panel: "decklist",
             title: "Flash Cards",
