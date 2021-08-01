@@ -1,19 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import DeckList,{DeckForm} from './DeckList';
 import CardList from './CardList';
 
 class DeckPanel extends React.Component {
     constructor(props) {
         super(props);
+
+        //const decks = parseJSON('decks');
+        const decks = parseJSON('deck_data');
+console.log(decks);
         this.state = {
             panel: "decklist",
             title: "Flash Cards",
             showForm: false,
-            decks: [
-                { id: '1', title: 'deck title 1' },
-                { id: '2', title: 'deck title 2' },
-                { id: '3', title: 'deck title 3' }, 
-            ],
+            decks: decks,
         }
         
         this.handleAddClick = this.handleAddClick.bind(this);
@@ -31,12 +31,23 @@ class DeckPanel extends React.Component {
         });
     }
 
-    saveDeckList(title, deck, isNewDeck){
-        console.log(title);
-        console.log(deck);
-        console.log(isNewDeck);
+    saveDeckList({target}){
+        const id = new Date().getTime();
 
+        const decks = this.state.decks.slice();
+        const data_storage = {};
+        const newDeck = [{
+            id: id,
+            title: target.title.value
+        }];
+        decks.push(newDeck);
+
+        data_storage['deck_data'] = decks;
+
+        this.setState({decks: decks});
+        localStorage.setItem('decks', JSON.stringify(data_storage));
     }
+
     render() {     
         let list;
         if(this.state.panel === 'decklist'){
@@ -57,7 +68,6 @@ class DeckPanel extends React.Component {
                     {(()=>{
                         if(this.state.showForm === true){
                            return <DeckForm 
-                                    deck={[]} 
                                     updateDeckList={this.saveDeckList}
                                 />;
                         }
@@ -70,38 +80,34 @@ class DeckPanel extends React.Component {
         
 }
 
-class PanelHeader extends React.Component {
-   // constructor(props){
-   //     super(props);
-   // } 
+const PanelHeader = (props) => {
+    return(
+        <React.Fragment>
+            <div className="panel-header">
+                <h1 className="panel-title">{props.title}</h1>
+                <AddBtn showForm="true" handler={props.clickFunc}/>
+            </div>
+        </React.Fragment>
+    );
 
-    render(){
-        return(
-                <React.Fragment>
-                    <div className="panel-header">
-                        <h1 className="panel-title">{this.props.title}</h1>
-                        <AddBtn showForm="true" handler={this.props.clickFunc}/>
-                    </div>
-                </React.Fragment>
-            );
-    }
 }
 
-class AddBtn extends React.Component{ 
-    //constructor(props){
-    //    super(props);
-    //} 
-  
-    render() {
-        return(
-            <button 
-                className="add-btn" 
-                value="true"
-                onClick={()=>this.props.handler(true)}
-            >+</button>
-        );
+const AddBtn = (props) => { 
+    return(
+        <button 
+            className="add-btn" 
+            value="true"
+            onClick={()=>props.handler(true)}
+        >+</button>
+    );  
+}
+
+function parseJSON(data){
+    var json_temp = JSON.parse(localStorage.getItem(data));
+    if(!json_temp){
+        json_temp = [];
     }
-    
+    return json_temp;
 }
 
 export default DeckPanel;
