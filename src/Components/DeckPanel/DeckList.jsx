@@ -4,21 +4,14 @@ import './deck.css';
 class DeckList extends React.Component {
     constructor(props){
         super(props);
-        
-        this.handleEditClick = this.handleEditClick.bind(this);
-        this.updateDeckList = this.updateDeckList.bind(this);
     }
 
     updateDeckList = (e) => {
-        console.log('update e: ');
-        console.log(e);
-        
+        this.props.saveDeckList(e);
     }
 
     handleEditClick(deckID){
         console.log('Edit clicked!');
-        console.log(deckID);
-        console.log(this.props.decks[deckID]);
         return (<DeckForm 
                     deckID={deckID}
                     deck={this.props.decks[deckID]}
@@ -27,16 +20,22 @@ class DeckList extends React.Component {
                      
     }
 
+    handleDeleteClick(deckID){
+        this.props.handleDeleteClick(0.4453812730698925);
+        //console.log(deckID);
+    }
+
     renderDeck(decks) {
+    console.log(decks);      
         return (
-            decks.map(deck => (
+            decks.reverse().map(deck => (   
                 <Deck 
                     key={deck.id}
                     id={deck.id}    
                     value={deck.title} 
                     showForm={this.props.showForm}
+                    onDeleteClick={this.handleDeleteClick}
                     onEditClick={this.handleEditClick}
-                   // handleDeleteClick={() => this.handleDeleteClick(deck.id)}
                     onClick={() => this.handleClick()}
                 />            
             ))
@@ -52,19 +51,17 @@ class DeckList extends React.Component {
     }
     
 }
-
 export class DeckForm extends React.Component {
     constructor(props){
         super(props);
-        this.handleChange = this.handleChange.bind(this);
+        //this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange ({target}){
-        this.setState({
-            title: target.value
-        });
-    }
+    //handleChange ({target}){
+    //   this.props.updateTitle(e);
+    //}
+
     handleSubmit = (e) => {
         //let isNewDeck = false;
         //if(!this.props.decks) {
@@ -72,9 +69,6 @@ export class DeckForm extends React.Component {
         //}
         this.props.updateDeckList(e);
         e.preventDefault();
-        console.log('e: ');
-        console.log(e);
-        console.log(this.props);
         //this.props.updateDeckList(e.target.value, this.props.decks, isNewDeck );
         
     }
@@ -103,25 +97,32 @@ export class DeckForm extends React.Component {
         
 }
 
-class Deck extends React.Component {
+export class Deck extends React.Component {
     constructor(props){
         super(props);
     }
-
-   render(){
-       return(
-            <React.Fragment>
-                <div className="deck">
-                    <div className='deck-controls'>
-                        <button >Delete</button>
-                        <button value={this.props.id} onClick={()=>this.props.onEditClick(this.props.id)}>Edit</button>
-                        <button>Play</button>
-                    </div>
-                    <div className='deck-title'>{this.props.value}</div>
+    
+    render() {
+        //console.log(this.props.id);
+        return(
+        
+        <React.Fragment>
+            <div className="deck">
+                <div className='deck-controls'>
+                    <button value={this.props.value} 
+                        onClick={()=>this.props.onDeleteClick(this.props.value)}
+                    >Delete</button>
+                    <button value={this.props.id} 
+                        onClick={()=>this.props.onEditClick(this.props.id)}
+                    >Edit</button>
+                    <button>Play</button>
                 </div>
-            </React.Fragment>
-        );
-   }
+                <div className='deck-title'>{this.props.value}</div>
+            </div>
+        </React.Fragment>
+    );
+    }
+    
     
 }
 
