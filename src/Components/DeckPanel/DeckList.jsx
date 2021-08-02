@@ -4,24 +4,30 @@ import './deck.css';
 class DeckList extends React.Component {
     constructor(props){
         super(props);
+
+        this.handleEditClick = this.handleEditClick.bind(this);
     }
 
     updateDeckList = (e) => {
         this.props.saveDeckList(e);
     }
 
-    handleEditClick(deckID){
+    handleEditClick = (id, showForm) => {
         console.log('Edit clicked!');
+        console.log(this.props.decks[id]);
+        
+        console.log(showForm);
         return (<DeckForm 
-                    deckID={deckID}
-                    deck={this.props.decks[deckID]}
+                    deckID={id}
+                    deck={this.props.decks[id]}
+                    showForm={showForm}
                     updateDeckList={this.updateDeckList}
                 /> );        
                      
     }
 
-    handleDeleteClick(deckID){
-        this.props.handleDeleteClick(0.4453812730698925);
+    handleDeleteClick = (id) => {
+        this.props.handleDeleteClick(id);
         //console.log(deckID);
     }
 
@@ -54,23 +60,13 @@ class DeckList extends React.Component {
 export class DeckForm extends React.Component {
     constructor(props){
         super(props);
-        //this.handleChange = this.handleChange.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    //handleChange ({target}){
-    //   this.props.updateTitle(e);
-    //}
-
     handleSubmit = (e) => {
-        //let isNewDeck = false;
-        //if(!this.props.decks) {
-        //    isNewDeck = true;
-        //}
         this.props.updateDeckList(e);
-        e.preventDefault();
-        //this.props.updateDeckList(e.target.value, this.props.decks, isNewDeck );
-        
+        e.preventDefault();        
     }
 
     render(){
@@ -84,7 +80,6 @@ export class DeckForm extends React.Component {
                                 name="title" 
                                 placeholder="Type a deck name"
                                 value={this.props.decks}
-                                onChange={this.handleChange}
                             />
                         </label>
                         <button className="btn cancel-btn">Cancel</button>
@@ -101,23 +96,22 @@ export class Deck extends React.Component {
     constructor(props){
         super(props);
     }
-    
+
     render() {
-        //console.log(this.props.id);
+        console.log(this.props);
         return(
         
         <React.Fragment>
             <div className="deck">
-                <div className='deck-controls'>
-                    <button value={this.props.value} 
-                        onClick={()=>this.props.onDeleteClick(this.props.value)}
+                <div className="deck-controls">
+                    <button name="delete" value={this.props.id} 
+                        onClick={(e)=>this.props.onDeleteClick(e.target.value)}
                     >Delete</button>
-                    <button value={this.props.id} 
-                        onClick={()=>this.props.onEditClick(this.props.id)}
+                    <button name="edit" value={this.props.id} 
+                        onClick={(e)=>this.props.onEditClick(e.target.value, "true")}
                     >Edit</button>
-                    <button>Play</button>
                 </div>
-                <div className='deck-title'>{this.props.value}</div>
+                <div className="deck-title">{this.props.value}</div>
             </div>
         </React.Fragment>
     );
