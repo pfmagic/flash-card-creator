@@ -27,8 +27,13 @@ console.log(decks);
         
     }
     
+    showForm(){
+        this.setState({showForm:true});
+    }
+
     handleAddClick(showForm){
         this.setState({showForm:true});
+        //showForm();
     }
 
     handleTitleChange({ target }){
@@ -50,7 +55,7 @@ alert('delete fires!'+ id);
             id: id,
             title: target.title.value
         };
-        
+    
         decks.push(newDeck);
         const myJSON = JSON.stringify(decks);
         this.setState({decks: decks, showForm: false});
